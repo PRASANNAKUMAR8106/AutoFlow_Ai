@@ -1,0 +1,34 @@
+# IDEs
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backend (Java/Gradle)
+backend/build/
+backend/.gradle/
+backend/out/
+backend/.env
+
+# Mobile (Flutter)
+mobile/.dart_tool/
+mobile/.packages
+mobile/.pub-cache/
+mobile/.pub/
+mobile/build/
+mobile/ios/.symlinks/
+mobile/ios/Pods/
+mobile/ios/Runner/GeneratedPluginRegistrant.h
+mobile/ios/Runner/GeneratedPluginRegistrant.m
+mobile/.env
+
+# Infra
+.terraform/
+*.tfstate
+*.tfstate.backup
+.env
