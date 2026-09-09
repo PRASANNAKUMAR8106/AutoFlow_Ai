@@ -25,6 +25,10 @@ mobile/ios/.symlinks/
 mobile/ios/Pods/
 mobile/ios/Runner/GeneratedPluginRegistrant.h
 mobile/ios/Runner/GeneratedPluginRegistrant.m
+mobile/ios/Flutter/ephemeral/
+mobile/ios/Flutter/Generated.xcconfig
+mobile/ios/Flutter/flutter_export_environment.sh
+mobile/android/local.properties
 mobile/.env
 
 # Infra
