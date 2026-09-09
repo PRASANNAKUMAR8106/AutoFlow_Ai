@@ -31,12 +31,15 @@ public class User {
 
     private String phoneNumber;
 
+    @Builder.Default
     @Column(nullable = false)
     private boolean active = true;
 
+    @Builder.Default
     @Column(nullable = false)
     private boolean emailVerified = false;
 
+    @Builder.Default
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 

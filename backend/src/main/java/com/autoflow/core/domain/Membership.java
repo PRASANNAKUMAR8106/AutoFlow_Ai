@@ -32,6 +32,7 @@ public class Membership {
     @Column(nullable = false)
     private UserRole role;
 
+    @Builder.Default
     @Column(nullable = false, updatable = false)
     private LocalDateTime joinedAt = LocalDateTime.now();
 

@@ -44,6 +44,8 @@ public class AuthService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .active(true)
+                .emailVerified(false)
+                .createdAt(java.time.LocalDateTime.now())
                 .build();
 
         return userRepository.save(user);

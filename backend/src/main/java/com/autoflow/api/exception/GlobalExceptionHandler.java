@@ -3,8 +3,10 @@ package com.autoflow.api.exception;
 import com.autoflow.api.response.ApiResponse;
 import com.autoflow.core.exception.AutoFlowException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -25,6 +27,16 @@ public class GlobalExceptionHandler {
                     ApiResponse.ApiError.builder()
                             .code(ex.getErrorCode())
                             .build()));
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiResponse<Void>> handleAuthenticationException(AuthenticationException ex) {
+        log.error("Authentication failed: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.error(
+                "Invalid email or password",
+                ApiResponse.ApiError.builder()
+                        .code("UNAUTHORIZED")
+                        .build()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
