@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:autoflow_ai/core/api/api_client.dart';
 import 'package:autoflow_ai/core/auth/token_storage.dart';
+import 'package:autoflow_ai/core/theme/app_theme.dart';
 import 'package:autoflow_ai/features/auth/bloc/auth_bloc.dart';
 import 'package:autoflow_ai/features/auth/bloc/auth_event.dart';
 import 'package:autoflow_ai/features/auth/data/auth_repository.dart';
@@ -32,10 +33,7 @@ class AutoFlowApp extends StatelessWidget {
       create: (context) => getIt<AuthBloc>()..add(AuthCheckRequested()),
       child: MaterialApp(
         title: 'AutoFlow AI',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          useMaterial3: true,
-        ),
+        theme: AppTheme.lightTheme,
         home: const AppRoot(),
       ),
     );

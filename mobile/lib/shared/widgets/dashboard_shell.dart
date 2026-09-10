@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:autoflow_ai/core/theme/app_colors.dart';
+import 'package:autoflow_ai/core/theme/app_typography.dart';
+import 'package:autoflow_ai/core/theme/app_dimensions.dart';
+import 'package:autoflow_ai/shared/widgets/design_system/af_components.dart';
 
 class DashboardShell extends StatefulWidget {
   final Widget child;
@@ -28,23 +32,50 @@ class _DashboardShellState extends State<DashboardShell> {
     final isDesktop = kIsWeb || MediaQuery.of(context).size.width > 900;
 
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: Row(
         children: [
           if (isDesktop)
-            NavigationRail(
-              selectedIndex: _selectedIndex,
-              onDestinationSelected: (int index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
-              labelType: NavigationRailLabelType.all,
-              destinations: _sections.map((section) {
-                return NavigationRailDestination(
-                  icon: Icon(_getIconForSection(section)),
-                  label: Text(section),
-                );
-              }).toList(),
+            Container(
+              width: 250,
+              color: AppColors.surface,
+              child: Column(
+                children: [
+                  const SizedBox(height: AppSpacing.xxxl),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: AppSpacing.l),
+                    child: Text(
+                      'AutoFlow AI',
+                      style: AppTypography.h3,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.xl),
+                  Expanded(
+                    child: ListView(
+                      children: _sections.asMap().entries.map((entry) {
+                        int idx = entry.key;
+                        String section = entry.value;
+                        bool isSelected = _selectedIndex == idx;
+                        return ListTile(
+                          leading: Icon(
+                            _getIconForSection(section),
+                            color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                          ),
+                          title: Text(
+                            section,
+                            style: TextStyle(
+                              color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                            ),
+                          ),
+                          selected: isSelected,
+                          onTap: () => setState(() => _selectedIndex = idx),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              ),
             ),
           Expanded(
             child: Column(
@@ -66,7 +97,12 @@ class _DashboardShellState extends State<DashboardShell> {
 
   Widget _buildMobileHeader() {
     return AppBar(
-      title: Text(_sections[_selectedIndex]),
+      backgroundColor: AppColors.surface,
+      elevation: 0,
+      title: Text(
+        _sections[_selectedIndex],
+        style: AppTypography.h3,
+      ),
       actions: [
         IconButton(icon: const Icon(Icons.account_circle), onPressed: () {}),
       ],
@@ -78,6 +114,9 @@ class _DashboardShellState extends State<DashboardShell> {
       currentIndex: _selectedIndex,
       onTap: (index) => setState(() => _selectedIndex = index),
       type: BottomNavigationBarType.fixed,
+      backgroundColor: AppColors.surface,
+      selectedItemColor: AppColors.primary,
+      unselectedItemColor: AppColors.textSecondary,
       items: _sections.take(5).map((section) {
         return BottomNavigationBarItem(
           icon: Icon(_getIconForSection(section)),
@@ -90,20 +129,23 @@ class _DashboardShellState extends State<DashboardShell> {
   Widget _buildCurrentSection() {
     final section = _sections[_selectedIndex];
     return Padding(
-      padding: const EdgeInsets.all(24.0),
+      padding: const EdgeInsets.all(AppSpacing.l),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             section,
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+            style: AppTypography.h2,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.m),
           Expanded(
-            child: Center(
-              child: Text(
-                'Foundation page for $section. Content will be implemented in subsequent phases.',
-                style: const TextStyle(fontSize: 16, color: Colors.grey),
+            child: AFCard(
+              child: Center(
+                child: Text(
+                  'Foundation page for $section. Content will be implemented in subsequent phases.',
+                  style: AppTypography.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),
